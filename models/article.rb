@@ -1,5 +1,4 @@
 class Article
-
   attr_reader :description, :title, :url
 
   def initialize(title, url, description)
