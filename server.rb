@@ -1,36 +1,50 @@
-require 'sinatra'
-require 'csv'
-require_relative 'models/article'
+require "sinatra"
+require "pg"
+require "pry"
+require_relative "app/models/article"
 
-get '/' do
-  redirect '/articles'
+set :views, File.join(File.dirname(__FILE__), "app", "views")
+
+configure :development do
+  set :db_config, { dbname: "news_aggregator_development" }
 end
 
-get '/articles/new' do
+configure :test do
+  set :db_config, { dbname: "news_aggregator_test" }
+end
+
+def db_connection
+  begin
+    connection = PG.connect(Sinatra::Application.db_config)
+    yield(connection)
+  ensure
+    connection.close
+  end
+end
+
+get "/" do
+  redirect "/articles"
+end
+
+get "/articles" do
+  @articles = Article.all
+
+  erb :index
+end
+
+get "/articles/new" do
+  @article = Article.new
+
   erb :new
 end
 
-post '/articles' do
+post "/articles" do
+  @article = Article.new(params)
 
-  title = params['title']
-  url = params['url']
-  description = params['description']
-
-  new_article = "#{title}, #{url}, #{description}"
-
-  File.open('articles.csv', 'a') do |csv|
-    csv.puts(new_article)
+  if @article.save
+    redirect '/articles'
+  else
+    erb :new
   end
 
-  redirect '/articles'
-end
-
-get '/articles' do
-  @articles = []
-  CSV.foreach('articles.csv') do |row|
-    csv_a     = row.to_a
-    @articles << Article.new(csv_a[0], csv_a[1], csv_a[2])
-  end
-
-  erb :home
 end

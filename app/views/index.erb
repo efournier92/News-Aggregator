@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>News Aggregator Homepage</title>
+  </head>
+
+  <body>
+    <h2>Articles for Slackers:</h2>
+
+    <ul>
+      <% @articles.each do |article| %>
+      <li><%="TITLE:       #{article.title}"%><br/>
+        <%="URL: "%>
+        <a href="<%=article.url%>"><%=article.url%></a><br/>
+        <%="DESCRIPTION: #{article.description}\n"%><br/>
+        &nbsp;</li>
+      <% end %>
+    </ul>
+  </body>
+</html>
