@@ -1,4 +1,4 @@
-##News Aggregator (Sinatra)
+##News Aggregator (CSV Version)
 
 This is an app I built in Sinatra to practice receiving user input via HTTP POST requests, and persisting it via a `.csv` file
 
