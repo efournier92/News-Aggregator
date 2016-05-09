@@ -4,6 +4,8 @@ This is an app I built in Sinatra to practice receiving user input via HTTP POST
 
 I initially built this app to persist data via a `.csv` file, but converted it to PostgresSQL to increase scalability. I performed the conversion mainly to practice defining a database schema to store user-submitted articles, and reading from and writing information to a PostgreSQL database from a Sinatra application.
 
+The `spec` folder contains unit and features tests written using RSpec and Capybara, which provide full test coverage for the app.
+
 On every page load the server fetches data from the database, and displays a dynamically generated list of articles that users have submitted.
 
 ##Models
